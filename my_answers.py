@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
 import keras
-import itertools
+import string
 
 # TODO: fill out the function below that transforms the input series 
 # and window-size into a set of input/output pairs for use with our RNN model
@@ -29,16 +29,20 @@ def window_transform_series(series, window_size):
 def build_part1_RNN(window_size):
 
     model = Sequential()
-    model.add(LSTM(5, input_shape=(window_size,1)))
-    model.add(Dense(1, activation='sigmoid'))
+    model.add(LSTM(6, input_shape=(window_size,1)))
+    model.add(Dense(1))
 
     return model
 
 
 ### TODO: return the text input with only ascii lowercase and the punctuation given below included.
 def cleaned_text(text):
-    punctuation = ['!', ',', '.', ':', ';', '?']
+  
+    text = text.lower()
 
+    punctuation = '''!,.:;?'''
+    allowed = string.ascii_lowercase + punctuation + string.whitespace
+    filter(allowed.__contains__, text)    
     return text
 
 ### TODO: fill out the function below that transforms the input text and window-size into a set of input/output pairs for use with our RNN model
